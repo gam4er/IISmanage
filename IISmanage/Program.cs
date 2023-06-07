@@ -12,6 +12,22 @@ namespace IISmanage
             SiteCollection sites = serverManager.Sites;
             foreach (Site site in sites)
             {
+                foreach (Application app in site.Applications)
+                {
+                    Console.WriteLine("Found application with the following path: {0}", app.Path);
+                    Console.WriteLine("Virtual Directories:");
+                    if (app.VirtualDirectories.Count > 0)
+                    {
+                        foreach (VirtualDirectory vdir in app.VirtualDirectories)
+                        {
+                            Console.WriteLine("  Virtual Directory: {0}", vdir.Path);
+                            Console.WriteLine("   |-PhysicalPath = {0}", vdir.PhysicalPath);
+                            Console.WriteLine("   |-LogonMethod  = {0}", vdir.LogonMethod);
+                            Console.WriteLine("   +-UserName     = {0}\r\n", vdir.UserName);
+                        }
+                    }
+                }
+                /*
                 ConfigurationElementCollection siteCollection = site.GetCollection();
                 foreach (ConfigurationElement element in siteCollection)
                 {
@@ -23,6 +39,7 @@ namespace IISmanage
                         Console.WriteLine("Root Vdir {0} have phPath {1}", path.Value, PPath.Value);                        
                     }
                 }
+                */
             }
 
             Console.ReadLine();
